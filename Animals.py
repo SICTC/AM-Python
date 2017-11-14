@@ -138,7 +138,8 @@ class Fish(Animal):
     def __lt__(self, other):
         try:
             self_str = "{0} {1} {2} {3} {4}".format(self._name, self._species, self._color, self._fins, self._eyes)
-            other_str = "{0} {1} {2} {3} {4}".format(other.get_name(), other.get_species(), other.get_color(), other.get_fins(), other.get_eyes())
+            other_str = "{0} {1} {2} {3} {4}".format(other.get_name(), other.get_species(), other.get_color(), \
+                                                     other.get_fins(), other.get_eyes())
             return self_str < other_str
         except AttributeError:
             return NotImplemented
@@ -210,9 +211,3 @@ class Snake(Animal):
     
     def __str__(self):
         return "Snake:{0}, Venemous={1}, Length={2}".format(super().__str__(), self._venemous, self._length)
-
-
-
-
-
-
