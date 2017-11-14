@@ -1,4 +1,5 @@
 from random import choice, randint
+
 class Animal(object):
     
     _animal_count = 0
@@ -25,10 +26,12 @@ class Animal(object):
     #called when we say a == b
     def __eq__(self, other):
         try:
-            return self._name == other.get_name() and self._species == other.get_species() and self._color == other.get_color()
+            return self._name == other.get_name() \
+                 and self._species == other.get_species() \
+                 and self._color == other.get_color()
         except AttributeError:
             return False
-        
+    
     #called when we say a != b
     def __ne__(self, other):
         return not (self == other)
@@ -36,7 +39,7 @@ class Animal(object):
     #called when we say a < b
     def __lt__(self, other):
         try:
-            self_str = "{0} {1} {2}".format(self._name, self._species, self._species)
+            self_str = "{0} {1} {2}".format(self._name, self._species, self._color)
             other_str = "{0} {1} {2}".format(other.get_name(), other.get_species(), other.get_color())
             return self_str < other_str
         except AttributeError:
@@ -48,24 +51,24 @@ class Animal(object):
             return self < other or self == other
         except TypeError:
             return NotImplemented
-        
+    
     #called when we say a > b
     def __gt__(self, other):
         try:
             return not (self <= other)
         except TypeError:
             return NotImplemented
-        
+    
     #called when we say a >= b
     def __ge__(self, other):
         try:
-            return not (self < other)
+            return self > other or self == other
         except TypeError:
             return NotImplemented
-    
+        
     def __str__(self):
         return "Animal: Name={0}, Species={1}, Color={2}".format(self._name, self._species, self._color)
-    
+
 class Fish(Animal):
     
     _fish_count = 0
@@ -83,11 +86,11 @@ class Fish(Animal):
         return choice(fish_colors)
     
     def _gen_fins(self):
-        return randint(0,20)
+        return randint(1,20)
     
     def _gen_eyes(self):
         return randint(1,50)
-    
+
     def __init__(self, name=None, species=None, color=None, fins=None, eyes=None):
         if not name:
             name = self._gen_name()
@@ -109,7 +112,7 @@ class Fish(Animal):
             self._eyes = eyes
         
         Fish._fish_count += 1
-    
+
     def get_fins(self):
         return self._fins
     
@@ -119,9 +122,30 @@ class Fish(Animal):
     def fish_count(self):
         return Fish._fish_count
     
+    #only need to define __eq__ and __lt__
+    #because the other comparisons are based on those
+    #and will work if inhereted
+    def __eq__(self, other):
+        try:
+            return self._name == other.get_name() \
+                and self._species == other.get_species() \
+                and self._color == other.get_color() \
+                and self._fins == other.get_fins() \
+                and self._eyes == other.get_eyes()
+        except AttributeError:
+            return False
+        
+    def __lt__(self, other):
+        try:
+            self_str = "{0} {1} {2} {3} {4}".format(self._name, self._species, self._color, self._fins, self._eyes)
+            other_str = "{0} {1} {2} {3} {4}".format(other.get_name(), other.get_species(), other.get_color(), other.get_fins(), other.get_eyes())
+            return self_str < other_str
+        except AttributeError:
+            return NotImplemented
+
     def __str__(self):
         return "Fish:{0}, Fins={1}, Eyes={2}".format(super().__str__(), self._fins, self._eyes)
-    
+
 class Dino(Animal):
     
     _dino_count = 0
@@ -132,7 +156,7 @@ class Dino(Animal):
         self._size = size
         
         Dino._dino_count += 1
-        
+    
     def get_horns(self):
         return self._horns
     
@@ -141,7 +165,7 @@ class Dino(Animal):
     
     def dino_count(self):
         return Dino._dino_count
-    
+
     def __str__(self):
         return "Dino:{0}, Horns={1}, Size={2}".format(super().__str__(), self._horns, self._size)
 
@@ -154,62 +178,38 @@ class Bird(Dino):
         self._wingspan = wingspan
         
         Bird._bird_count += 1
-
+        
     def get_wingspan(self):
         return self._wingspan
     
     def bird_count(self):
-        return Bird._bird_count
+        return Bird._bird_count   
     
     def __str__(self):
         return "Bird:{0}, Wingspan={1}".format(super().__str__(), self._wingspan)
 
-class Sloth(Animal):
+class Snake(Animal):
     
-    _sloth_count = 0
+    _snake_count = 0
     
-    def __init__(self, name, species, color, personality, speed):
+    def __init__(self, name, species, color, venemous, length):
         super().__init__(name, species, color)
-        self._personality = personality
-        self._speed = speed
+        self._venemous = venemous
+        self._length = length
         
-        Sloth._sloth_count += 1
+        Snake._snake_count += 1
         
-    def get_personality(self):
-        return self._personality
+    def get_venemous(self):
+        return self._venemous
     
-    def get_speed(self):
-        return self._speed
-        
-    def sloth_count(self):
-        return Sloth._sloth_count
+    def get_length(self):
+        return self._length
+    
+    def snake_count(self):
+        return Snake._snake_count
     
     def __str__(self):
-        return "Sloth:{0}, Personality={1}, Speed={2}".format(super().__str__(), self._personality, self._speed)
-    
-class Panda(Animal):
-    
-    _panda_count = 0
-    
-    def __init__(self, name, species, color, weight, size):
-        super().__init__(name, species, color)
-        self._weight = weight
-        self._size = size
-        
-        Panda._panda_count += 1
-        
-    def get_weight(self):
-        return self._weight
-    
-    def get_size(self):
-        return self._size
-    
-    def panda_count(self):
-        return Panda._panda_count
-    
-    def __str__(self):
-        return "Panda:{0}, Weight={1}, Size={2}".format(super().__str__(), self._weight, self._size)
-
+        return "Snake:{0}, Venemous={1}, Length={2}".format(super().__str__(), self._venemous, self._length)
 
 
 
