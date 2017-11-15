@@ -69,6 +69,9 @@ class Animal(object):
     def __str__(self):
         return "Animal: Name={0}, Species={1}, Color={2}".format(self._name, self._species, self._color)
 
+    def __repr__(self):
+        return "Animal({0}, {1}, {2})".format(repr(self._name), repr(self._species), repr(self._color))
+
 class Fish(Animal):
     
     _fish_count = 0
@@ -138,14 +141,16 @@ class Fish(Animal):
     def __lt__(self, other):
         try:
             self_str = "{0} {1} {2} {3} {4}".format(self._name, self._species, self._color, self._fins, self._eyes)
-            other_str = "{0} {1} {2} {3} {4}".format(other.get_name(), other.get_species(), other.get_color(), \
-                                                     other.get_fins(), other.get_eyes())
+            other_str = "{0} {1} {2} {3} {4}".format(other.get_name(), other.get_species(), other.get_color(), other.get_fins(), other.get_eyes())
             return self_str < other_str
         except AttributeError:
             return NotImplemented
 
     def __str__(self):
         return "Fish:{0}, Fins={1}, Eyes={2}".format(super().__str__(), self._fins, self._eyes)
+
+    def __repr__(self):
+        return "Fish({0}, {1}, {2}, {3}, {4})".format(repr(self._name), repr(self._species), repr(self._color), repr(self._fins), repr(self._eyes))
 
 class Dino(Animal):
     

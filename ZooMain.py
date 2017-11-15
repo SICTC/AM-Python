@@ -1,20 +1,22 @@
+from BinSearchTree import BinarySearchTree
 from Animals import Animal, Fish, Dino, Bird, Snake
 
 def animals():
 #     a = Animal("Larry", "Lobster", "Red")
 #     print(a)
-#     
-#     b = Fish("Nemo", "Clownfish", "Orange", "3", "2")
-#     print(b)
-#     
+#      
+#     b = Fish("Nemo", "Clownfish", "Orange", 3, 2)
+#     b2 = Fish("Nemo", "Clownfish", "Orange", "Three and a little one", "Beady")
+#     #print(b)
+#      
 #     c = Dino("Tina", "Raptor", "Blue", True, 3)
-#     print(c)
-#     
+#     #print(c)
+#      
 #     d = Bird("Theodore", "Cardinal", "Red", 47, 12)
-#     print(d)
-#     
+#     #print(d)
+#      
 #     e = Snake("Guido van Rossum", "Human", "Pasty", False, "Tallish")
-#     print(e)
+#     #print(e)
 #     
 #     print("Animals: {0}".format(b.animal_count()))
 #     print("Fish: {0}".format(b.fish_count()))
@@ -44,21 +46,53 @@ def animals():
 #     print("LE: {0}".format(c <= b))
 #     print("GT: {0}".format(c > b))
 #     print("GE: {0}".format(c >= b))
-    
-    
+       
+       
+#     fishL = []
+#     for i in range(300):
+#         fishL.append(Fish())
+#         
+#     for f in fishL:
+#         print(f)
+#               
+#     fishL.sort()
+#           
+#     print("\n")
+#           
+#     for f in fishL:
+#         print(f)
+
     fishL = []
-    for i in range(300):
-        fishL.append(Fish())
-  
-    for f in fishL:
+    t = BinarySearchTree()
+    names = ["Lee", "Isaac", "Carter", "David", "Alejandra", "Ariel"]
+    
+    for n in names:
+        f = Fish(name=n)
+        fishL.append(f)
+        t.insert(f.get_name(), f)
+        
+#     for f in fishL:
+#         print(f)
+    
+    for f in t.preorder():
         print(f)
         
-    fishL.sort()
+    print("Lookup: {0}".format(t.lookup("Carter")))
+    print("Remove: {0}".format(t.remove("Ariel")))
     
-    print("\n")
-    
-    for f in fishL:
+    for f in t.preorder():
         print(f)
+#     print("\nPreorder:")    
+#     for f in t.preorder():
+#         print(f)
+#     
+#     print("\nInorder:")
+#     for f in t.inorder():
+#         print(f)
+#         
+#     print("\nPostorder:")
+#     for f in t.postorder():
+#         print(f)
 
 if __name__ == '__main__':
     animals()
